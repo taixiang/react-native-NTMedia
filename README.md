@@ -9,7 +9,7 @@ Android 添加:
   `头部添加import com.ntutilmedia.NTMediaPackage;`   
   `getPackages 方法里添加 new NTMediaPackage()(如下)`  
   `@Override`   
-    `protected List<ReactPackage> getPackages() {` 
+    `protected List<ReactPackage> getPackages() {`  
       `return Arrays.<ReactPackage>asList(`  
          `new MainReactPackage(),`  
          `new NTMediaPackage()`  
@@ -17,7 +17,7 @@ Android 添加:
     `}`  
       
 JS 使用:
-    `const mediaModule = NativeModules.NTMediaModule;`
+    `const mediaModule = NativeModules.NTMediaModule;`  
     `初始化media,传入url地址,返回总时长`  
     `componentDidMount(){`  
     `mediaModule.initMedia(mediaUrl,(e)=>{alert(e)});`  
@@ -34,7 +34,6 @@ JS 使用:
      `DeviceEventEmitter.addListener('NTUtilMedia',(e)=>{`  
     `switch(e.type){`  
       `case 5001:`  
-            
       `break;`  
     `}`  
   `});`
