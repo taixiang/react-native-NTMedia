@@ -26,7 +26,7 @@ JS 使用:
     `mediaModule.playMedia();`  
     `音频暂停`  
     `mediaModule.pauseMedia();`  
-    `释放media资源`
+    `释放media资源`  
     `componentWillUnmount(){`  
     `mediaModule.releaseMedia();`
     `}`
