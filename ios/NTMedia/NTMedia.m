@@ -61,6 +61,11 @@ RCT_EXPORT_METHOD(pauseMedia){
     
 }
 
+RCT_EXPORT_METHOD(sliderPlayMedia:(int)time){
+    [self.player seekToTime:CMTimeMake(time,1)];
+}
+
+
 //观察者方法，用来监听播放器状态
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     //当播放器状态改变
