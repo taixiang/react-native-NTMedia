@@ -58,8 +58,8 @@ RCT_EXPORT_METHOD(pauseMedia){
     if(self.isPlaying){
        [self.player pause];
     }
-    
 }
+
 
 RCT_EXPORT_METHOD(sliderPlayMedia:(int)time){
     [self.player seekToTime:CMTimeMake(time,1)];
