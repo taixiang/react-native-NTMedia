@@ -59,6 +59,13 @@ public class NTMediaModule extends ReactContextBaseJavaModule {
 		mediaPlayer.releaseMedia();
 	}
 
-
+	/**
+	 * 拖动播放,拖动到nSec秒
+	 * @param nSec
+	 */
+	@ReactMethod
+	public void sliderPlayMedia(int nSec) {
+		mediaPlayer.seekToInSec(nSec);
+	}
 
 }

@@ -62,16 +62,30 @@ public class NTMediaPlayer extends MediaPlayer{
 		}
 	}
 
+	/**
+	 * 播放
+	 */
 	public void playMedia(){
 		if(isPrepared){
 			start();
 		}
 	}
 
+	/**
+	 * 暂停
+	 */
 	public void pauseMedia(){
 		if(isPrepared){
 			pause();
 		}
+	}
+
+	/**
+	 * 跳跃播放
+	 * @param nSec 秒数
+	 */
+	public void seekToInSec(int nSec) {
+		this.seekTo(nSec*1000);
 	}
 
 	/**

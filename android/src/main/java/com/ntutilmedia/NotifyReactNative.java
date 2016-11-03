@@ -6,12 +6,10 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-/**
- * Created by cl10092 on 2016/4/7.
- */
-public class NotifyReactNative {
-	// send event for notify react-native
 
+public class NotifyReactNative {
+
+	// send event for notify react-native
 	public static void sendEvent(@Nullable WritableMap params) {
 		sendNativeEvent(NTMediaModule.context, "NTUtilMedia", params);
 	}
