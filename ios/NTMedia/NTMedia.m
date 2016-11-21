@@ -23,6 +23,8 @@ RCT_EXPORT_METHOD(initMedia:(NSString *)str andCallback:(RCTResponseSenderBlock)
     
     NSURL *url = [NSURL URLWithString:str];
     
+    NSLog(@"url:%@",str);
+    
     self.isPlaying = NO;
     self.playerItem = [[AVPlayerItem alloc] initWithURL:url];
     self.player = [[AVPlayer alloc]initWithPlayerItem:self.playerItem];
@@ -34,19 +36,24 @@ RCT_EXPORT_METHOD(initMedia:(NSString *)str andCallback:(RCTResponseSenderBlock)
     __weak NTMedia *ntmedia = self;
     __weak AVPlayer *weakPlayer = self.player;
     
-    [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+    self.timeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         //获取当前时间
         float currentTime = weakPlayer.currentItem.currentTime.value/weakPlayer.currentItem.currentTime.timescale;
         
         [ntmedia currentTime:[NSString stringWithFormat:@"%f",currentTime]];
         
     }];
-
+    
+    
     
 }
 
 
 RCT_EXPORT_METHOD(playMedia){
+    
+    
+    NSLog(@"isPlaying : %@",self.isPlaying?@"YES":@"NO");
+    
     if(self.isPlaying){
         [self.player play];
     }
@@ -56,13 +63,24 @@ RCT_EXPORT_METHOD(playMedia){
 
 RCT_EXPORT_METHOD(pauseMedia){
     if(self.isPlaying){
-       [self.player pause];
+        [self.player pause];
     }
 }
 
-
 RCT_EXPORT_METHOD(sliderPlayMedia:(int)time){
     [self.player seekToTime:CMTimeMake(time,1)];
+}
+
+RCT_EXPORT_METHOD(releaseMedia){
+    
+    if(self.player!=nil && self.playerItem!=nil && self.timeObserver!=nil){
+        [self.playerItem removeObserver:self forKeyPath:@"status" context:nil];
+        [self.player removeTimeObserver:self.timeObserver];
+        self.player = nil;
+        self.playerItem = nil;
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
+    
 }
 
 
@@ -80,7 +98,14 @@ RCT_EXPORT_METHOD(sliderPlayMedia:(int)time){
     }
 }
 
-
+-(void)dealloc{
+    
+    [self.playerItem removeObserver:self forKeyPath:@"status" context:nil];
+    [self.player removeTimeObserver:self.timeObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.player = nil;
+    self.playerItem = nil;
+}
 
 /**
  播放结束

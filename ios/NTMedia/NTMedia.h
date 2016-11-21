@@ -20,4 +20,6 @@
 
 @property (nonatomic,assign) BOOL isPlaying;
 
+@property (nonatomic,strong)  id timeObserver;
+
 @end
