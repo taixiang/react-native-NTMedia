@@ -31,7 +31,7 @@ public class NTMediaModule extends ReactContextBaseJavaModule {
 	 */
 	@ReactMethod
 	public void initMedia(String url, Callback callback){
-		mediaPlayer = new NTMediaPlayer();
+		mediaPlayer = new NTMediaPlayer(context);
 		mediaPlayer.initMedia(url, callback);
 	}
 
@@ -67,5 +67,4 @@ public class NTMediaModule extends ReactContextBaseJavaModule {
 	public void sliderPlayMedia(int nSec) {
 		mediaPlayer.seekToInSec(nSec);
 	}
-
 }

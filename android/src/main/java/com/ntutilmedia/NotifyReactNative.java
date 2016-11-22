@@ -11,7 +11,7 @@ public class NotifyReactNative {
 
 	// send event for notify react-native
 	public static void sendEvent(@Nullable WritableMap params) {
-		sendNativeEvent(NTMediaModule.context, "NTUtilMedia", params);
+		sendNativeEvent(NTMediaModule.context, "cl_msg", params);
 	}
 
 	/*

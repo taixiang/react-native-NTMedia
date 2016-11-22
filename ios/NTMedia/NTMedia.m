@@ -17,7 +17,7 @@
 
 @synthesize bridge = _bridge;
 
-RCT_EXPORT_MODULE();
+RCT_EXPORT_MODULE(NTMediaModule);
 
 RCT_EXPORT_METHOD(initMedia:(NSString *)str andCallback:(RCTResponseSenderBlock)callback){
     
