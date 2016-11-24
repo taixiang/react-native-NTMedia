@@ -32,7 +32,7 @@ public class NTMediaPlayer extends MediaPlayer {
 	public void initMedia(String url, final Callback callback) {
 		try {
 			reset();
-			setAudioStreamType(AudioManager.STREAM_SYSTEM);
+			setAudioStreamType(AudioManager.STREAM_MUSIC);
 			setDataSource(url);
 			prepareAsync();
 			setOnCompletionListener(new OnCompletionListener() {
@@ -58,10 +58,11 @@ public class NTMediaPlayer extends MediaPlayer {
 				}
 			});
 
+			// 音量调节范围,用的是 STREAM_MUSIC
 			am = (AudioManager) (context.getSystemService(Context.AUDIO_SERVICE));
-			maxVolume = am.getStreamMaxVolume(AudioManager.STREAM_SYSTEM);
-			prevVolume = am.getStreamVolume(AudioManager.STREAM_SYSTEM);
-			float x = (float) (1.0*prevVolume/maxVolume);
+			maxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+			prevVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+			float x = (float) (1.0 * prevVolume / maxVolume);
 			this.setVolume(x, x);
 
 			handler = new Handler();
@@ -71,13 +72,14 @@ public class NTMediaPlayer extends MediaPlayer {
 					long currentDuration = getCurrentPosition();
 //					Log.d("NTMediaPlayer", "isPrepared=" + String.valueOf(isPrepared) + ", current=" + currentDuration);
 					if (isPrepared) {
-						int currentVolume = am.getStreamVolume(AudioManager.STREAM_SYSTEM);
+						int currentVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
 						if (currentVolume != prevVolume) {
-							float y = (float) (1.0*currentVolume/maxVolume);
+							float y = (float) (1.0 * currentVolume / maxVolume);
 							NTMediaPlayer.this.setVolume(y, y);
 							prevVolume = currentVolume;
 						}
-						Log.d("NTMediaPlayer", "prevVolume=" + String.valueOf(prevVolume) + "current=" + String.valueOf(currentVolume) + ", max=" + String.valueOf(maxVolume));
+						Log.d("NTMediaPlayer", "prevVolume=" + String.valueOf(prevVolume) + "current="
+								+ String.valueOf(currentVolume) + ", max=" + String.valueOf(maxVolume));
 						NotifyReactNative.notifyDuration(String.valueOf(currentDuration));
 					}
 					handler.postDelayed(this, 1000);
