@@ -19,6 +19,7 @@ public class NTMediaPlayer extends MediaPlayer {
 	private Handler handler;
 	private Runnable updateTimeTask;
 	private boolean isPrepared = false;
+	private boolean isPlaying = false;
 	private AudioManager am = null;
 	private int maxVolume = 0;
 	private int prevVolume = 0;
@@ -82,10 +83,11 @@ public class NTMediaPlayer extends MediaPlayer {
 								+ String.valueOf(currentVolume) + ", max=" + String.valueOf(maxVolume));
 						NotifyReactNative.notifyDuration(String.valueOf(currentDuration));
 					}
-					handler.postDelayed(this, 1000);
+					if (isPlaying) {
+						handler.postDelayed(this, 1000);
+					}
 				}
 			};
-			handler.postDelayed(updateTimeTask, 1000);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -97,6 +99,8 @@ public class NTMediaPlayer extends MediaPlayer {
 	public void playMedia() {
 		if (isPrepared) {
 			start();
+			isPlaying = true;
+			handler.postDelayed(updateTimeTask, 1000);
 		}
 	}
 
@@ -105,6 +109,7 @@ public class NTMediaPlayer extends MediaPlayer {
 	 */
 	public void pauseMedia() {
 		if (isPrepared) {
+			isPlaying = false;
 			pause();
 		}
 	}
