@@ -1,7 +1,7 @@
 {
   "name": "react-native-ntmedia",
-  "version": "0.0.6",
-  "description": "",
+  "version": "0.0.8",
+  "description": "播放时发送进度事件，暂停后不发送",
   "main": "index.js",
 
   "repository": {
